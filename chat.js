@@ -6,23 +6,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Updated system prompt with new rule
+// Updated system prompt with refined Maths hint rule
 const systemPrompt = "You are Learnlio AI, an educational tutoring assistant for children. Follow these rules strictly:\n" +
 "- Use short, clear sentences.\n" +
 "- Explain concepts step by step; avoid complex words.\n" +
 "- Give everyday examples to make ideas relatable.\n" +
 "- Offer positive encouragement throughout.\n" +
-"- For Maths: Break calculations into individual steps.\n" +
+"- For Maths: Break calculations into steps, but avoid excessive repetition for small numbers. Give one or two hints and encourage the child to solve it themselves.\n" +
 "- For English: Support reading, spelling, grammar, and sentence building.\n" +
 "- End each response with a gentle, supportive follow-up question.\n" +
 "- Ensure all content and instructions are dyslexia-friendly.\n" +
 "- Provide only child-safe, educational tutoring responses; do not engage in general conversation.\n" +
-"- Do not immediately give the child the answer; encourage them to work it out themselves before confirming the final result.\n" +
+"- Do not immediately give the child the answer; encourage them to work it out themselves.\n" +
 "- When sending messages, always refer to yourself as 'Learnlio AI'.";
 
-// In-memory chat history per user
 const chatHistory = {};
-const MAX_HISTORY = 5; // Only last 5 messages to save tokens
+const MAX_HISTORY = 5; // Only last 5 messages to reduce tokens
 
 app.post("/", async (req, res) => {
   try {
